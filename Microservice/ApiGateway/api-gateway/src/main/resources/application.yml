@@ -1,0 +1,37 @@
+server:
+  port: 9191
+# spring current application name
+spring:
+  application:
+    name: API-GATEWAY
+
+
+#configuration for request url for microservices.
+cloud:
+  gateway:
+    routes:
+      - id: USER-SERVICE
+        uri: lb://USER-SERVICE
+        predicates:
+          -path=/users/**
+      - id: EMPLOYEE-SERVICE
+        uri: lb://EMPLOYEE-SERVICE
+        predicates:
+          -path=/employee/**
+      - id: STUDENT-SERVICE
+        uri: lb://STUDENT-SERVICE
+        predicates:
+          -path=/student/**
+
+
+
+
+#resgitery
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      default-Zone: http://localhost:8761/eureka/
+      instance:
+        hostname: localhost
